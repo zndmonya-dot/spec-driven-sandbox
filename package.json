@@ -1,0 +1,34 @@
+{
+  "name": "spec-driven-sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "verify": "npm run lint && npm run typecheck && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zndmonya-dot/spec-driven-sandbox.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zndmonya-dot/spec-driven-sandbox/issues"
+  },
+  "homepage": "https://github.com/zndmonya-dot/spec-driven-sandbox#readme",
+  "devDependencies": {
+    "@biomejs/biome": "2.6.4",
+    "@types/node": "^26.6.6",
+    "quickpickle": "^1.11.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "type": "module"
+}

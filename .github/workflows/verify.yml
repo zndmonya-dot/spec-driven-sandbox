@@ -1,0 +1,16 @@
+# 合否判定。main への PR とプッシュのたびに、作業部屋と同じ Node で npm run verify を走らせる。
+name: verify
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    container: node:22-bookworm
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run verify

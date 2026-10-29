@@ -9,3 +9,6 @@ export type Quantity = z.infer<typeof Quantity>;
 
 export const StockCommand = z.object({ sku: Sku, quantity: Quantity });
 export type StockCommand = z.infer<typeof StockCommand>;
+
+export const ReorderPoint = z.number().int().nonnegative();
+export type ReorderPoint = z.infer<typeof ReorderPoint>;

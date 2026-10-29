@@ -1,0 +1,47 @@
+name: 注文書
+description: AI に作ってほしいものを書く。人が書くのはこれだけ。
+title: "[注文] "
+labels: ["order"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        書き方は docs/how-to-order.md を見てください。迷ったら空欄のままでかまいません。AI が質問します。
+  - type: input
+    id: what
+    attributes:
+      label: 作りたいもの（一言で）
+      placeholder: 例）在庫が少なくなった商品を一覧で見たい
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: なぜ必要か
+      placeholder: 例）発注が遅れて在庫切れになるのを防ぎたいから
+    validations:
+      required: true
+  - type: textarea
+    id: scenarios
+    attributes:
+      label: 決まりごと（こうなったら合格）
+      description: 「前提 → もし → ならば」の形で、具体的な数字を入れて書きます。1つの決まりごとに1つのシナリオ。
+      render: gherkin
+      value: |
+        シナリオ: （決まりごとを一言で）
+          前提 （最初の状態）
+          もし （すること）
+          ならば （こうなっていれば合格）
+    validations:
+      required: true
+  - type: textarea
+    id: words
+    attributes:
+      label: 新しく使う言葉
+      description: CONTEXT.md にない言葉を使うときだけ書きます。
+      placeholder: 例）発注点：この在庫数を下回ったら発注する目安の数
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: やらないこと
+      placeholder: 例）発注そのものは今回は作らない

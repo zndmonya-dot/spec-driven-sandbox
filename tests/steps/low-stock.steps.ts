@@ -2,12 +2,12 @@
 import { Given, Then, When } from "quickpickle";
 import { expect } from "vitest";
 import {
+  emptyInventory,
   emptyReorderPoints,
   lowStock,
   type ReorderPoints,
   setReorderPoint,
-} from "../../src/inventory/low-stock";
-import { emptyInventory } from "../../src/inventory/stock";
+} from "../../src/inventory";
 import type { InventoryWorld } from "./inventory.steps";
 
 type LowStockWorld = InventoryWorld & {

@@ -5,7 +5,7 @@
 ## 完了の定義
 
 `quality-check` スキルのチェックリストを全部満たしたときだけ「完了」と言ってよい。
-その中心は `npm run verify`（guard → lint → 型検査 → 仕様のテスト）が通ること。
+その中心は `npm run verify`（guard → lint → 型検査 → 依存ルール → 仕様のテスト）が通ること。
 
 ## 読む順番
 

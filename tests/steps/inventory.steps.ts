@@ -9,7 +9,7 @@ import {
   quantityOf,
   receive,
   ship,
-} from "../../src/inventory/stock";
+} from "../../src/inventory";
 
 export type InventoryWorld = {
   inventory: Inventory;

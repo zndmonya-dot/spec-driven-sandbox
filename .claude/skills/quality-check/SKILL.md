@@ -11,7 +11,7 @@ description: PR を出す前やコミットの前に必ず使う品質チェッ�
 
 ## 機械で確かめる
 
-- [ ] `npm run verify` が通る（guard → lint → 型検査 → 仕様のテスト）
+- [ ] `npm run verify` が通る（guard → lint → 型検査 → 依存ルール → 仕様のテスト）
 
 `npm run guard` は、テストのスキップ（`@skip` などのタグ、`.skip` / `.only`）が紛れ込んでいたら落ちる。
 

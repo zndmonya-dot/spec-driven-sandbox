@@ -5,6 +5,6 @@ export default defineConfig({
   plugins: [quickpickle()],
   test: {
     include: ["specs/**/*.feature", "src/**/*.test.ts"],
-    setupFiles: ["tests/steps/inventory.steps.ts"],
+    setupFiles: ["tests/steps/inventory.steps.ts", "tests/steps/low-stock.steps.ts"],
   },
 });

@@ -11,7 +11,7 @@ import {
   ship,
 } from "../../src/inventory/stock";
 
-type InventoryWorld = {
+export type InventoryWorld = {
   inventory: Inventory;
   lastError?: InventoryError;
 };
@@ -42,7 +42,9 @@ Given("在庫は空である", (world: InventoryWorld) => {
 Given(
   "商品 {string} の在庫数は {int} 個である",
   (world: InventoryWorld, sku: string, quantity: number) => {
-    const result = receive(emptyInventory(), { sku, quantity });
+    const current = world.inventory ?? emptyInventory();
+    if (current.has(sku)) throw new Error(`前提で同じ商品を2回登録しています: ${sku}`);
+    const result = receive(current, { sku, quantity });
     if (!result.ok) throw new Error(`前提を作れません: ${result.error}`);
     world.inventory = result.value;
   },

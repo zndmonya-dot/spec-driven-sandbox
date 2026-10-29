@@ -7,7 +7,8 @@
     "typecheck": "tsc",
     "lint": "biome check .",
     "format": "biome check --write .",
-    "verify": "npm run lint && npm run typecheck && npm test"
+    "verify": "npm run guard && npm run lint && npm run typecheck && npm test",
+    "guard": "node scripts/guard.mjs"
   },
   "repository": {
     "type": "git",

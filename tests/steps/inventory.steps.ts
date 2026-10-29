@@ -1,14 +1,14 @@
 // specs/inventory/*.feature の各ステップを、在庫モジュールの呼び出しに対応づける。
 // ここには判断ロジックを書かない。仕様の言葉をコードの言葉に訳すだけにする。
-import { Given, When, Then } from "quickpickle";
+import { Given, Then, When } from "quickpickle";
 import { expect } from "vitest";
 import {
   emptyInventory,
+  type Inventory,
+  type InventoryError,
   quantityOf,
   receive,
   ship,
-  type Inventory,
-  type InventoryError,
 } from "../../src/inventory/stock";
 
 type InventoryWorld = {
@@ -39,19 +39,28 @@ Given("在庫は空である", (world: InventoryWorld) => {
   world.inventory = emptyInventory();
 });
 
-Given("商品 {string} の在庫数は {int} 個である", (world: InventoryWorld, sku: string, quantity: number) => {
-  const result = receive(emptyInventory(), { sku, quantity });
-  if (!result.ok) throw new Error(`前提を作れません: ${result.error}`);
-  world.inventory = result.value;
-});
+Given(
+  "商品 {string} の在庫数は {int} 個である",
+  (world: InventoryWorld, sku: string, quantity: number) => {
+    const result = receive(emptyInventory(), { sku, quantity });
+    if (!result.ok) throw new Error(`前提を作れません: ${result.error}`);
+    world.inventory = result.value;
+  },
+);
 
-When(/^商品 "([^"]*)" を (-?[\d.]+) 個(入庫|出庫)する$/, (world: InventoryWorld, sku: string, quantity: string, op: string) => {
-  apply(world, op as keyof typeof operations, sku, Number(quantity));
-});
+When(
+  /^商品 "([^"]*)" を (-?[\d.]+) 個(入庫|出庫)する$/,
+  (world: InventoryWorld, sku: string, quantity: string, op: string) => {
+    apply(world, op as keyof typeof operations, sku, Number(quantity));
+  },
+);
 
-Then(/^商品 "([^"]*)" の在庫数は (\d+) 個(?:になる|のままである)$/, (world: InventoryWorld, sku: string, quantity: string) => {
-  expect(quantityOf(world.inventory, sku)).toBe(Number(quantity));
-});
+Then(
+  /^商品 "([^"]*)" の在庫数は (\d+) 個(?:になる|のままである)$/,
+  (world: InventoryWorld, sku: string, quantity: string) => {
+    expect(quantityOf(world.inventory, sku)).toBe(Number(quantity));
+  },
+);
 
 Then("{string} で拒否される", (world: InventoryWorld, name: string) => {
   const expected = errorNames[name];

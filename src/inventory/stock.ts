@@ -1,6 +1,6 @@
 // 在庫の入庫・出庫。振る舞いの仕様は specs/inventory/stock.feature。
 // 在庫は変更せず、新しい在庫を返す。失敗したときは元の在庫がそのまま残る。
-import { StockCommand, type Sku } from "./schema";
+import { type Sku, StockCommand } from "./schema";
 
 export type Inventory = ReadonlyMap<Sku, number>;
 export type InventoryError = "INSUFFICIENT_STOCK" | "UNKNOWN_SKU" | "INVALID_INPUT";

@@ -1,0 +1,12 @@
+{
+  "name": "spec-driven-sandbox",
+  "build": { "dockerfile": "Dockerfile" },
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+  "postCreateCommand": "npm ci",
+  "customizations": {
+    "vscode": {
+      "extensions": ["biomejs.biome", "vitest.explorer", "CucumberOpen.cucumber-official"]
+    }
+  }
+}

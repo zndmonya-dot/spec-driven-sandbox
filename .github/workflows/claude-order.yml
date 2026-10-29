@@ -1,0 +1,43 @@
+# 注文書（order ラベルの Issue）が来たら、AI が CLAUDE.md の手順で作って PR を出す。
+# 注文書や PR のコメントで @claude と呼ぶと、質問への返事や手直しにも対応する。
+# 動かすには、リポジトリの Secrets に CLAUDE_CODE_OAUTH_TOKEN か ANTHROPIC_API_KEY を登録する。
+name: claude-order
+
+on:
+  issues:
+    types: [labeled]
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+
+jobs:
+  claude:
+    if: |
+      (github.event_name == 'issues' && github.event.label.name == 'order') ||
+      (github.event_name != 'issues' && contains(github.event.comment.body, '@claude'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          label_trigger: order
+          claude_args: |
+            --max-turns 60
+            --allowedTools "Bash(npm ci),Bash(npm test),Bash(npm run verify),Bash(npm run lint),Bash(npm run format),Bash(npm run typecheck),Bash(npx vitest:*),Bash(git status),Bash(git diff:*),Bash(git log:*),Bash(git add:*),Bash(git commit:*),Bash(git push:*),Edit,Write,Read,Glob,Grep"
+            --append-system-prompt "CLAUDE.md の「注文書（Issue）から作るときの手順」に必ず従う。あいまいな点があれば実装せず Issue に質問を1つだけ書いて止まる。npm run verify が通るまで完了と言わない。"
